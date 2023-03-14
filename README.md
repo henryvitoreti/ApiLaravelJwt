@@ -15,3 +15,10 @@
   - **Construção da estrutura do banco de dados:** `php artisan migrate`
   - **Popular base de dados:** `php artisan db:seed`
   - **Executar aplicação** `php artisan serve`
+
+## Ultilização
+- ### Swagger
+  - **Acessar Documentação do Swagger** `{server_host}/api/documentation`
+  - **Utilizar endpoint de login com os seguintes dados:** `{"email": "usuario@teste.com.br","password": "senha123"}`
+  - **Utilizar token do retorno no Login para efetuar a autorização, opção se encontra no topo da página.**
+  - **Após  isso será possivel ultilizar os demais endpoints.**

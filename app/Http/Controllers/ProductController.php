@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ProductInterface;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductController extends Controller implements ProductInterface
 {
     /** @var ProductRepository */
     protected ProductRepository $productRepository;
@@ -20,7 +21,7 @@ class ProductController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function filter(Request $request)
+    public function filter(Request $request): JsonResponse
     {
         $products = $this->productRepository->search($request->all());
 
@@ -31,13 +32,13 @@ class ProductController extends Controller
      * @param $id
      * @return JsonResponse
      */
-    public function find($id)
+    public function find($id): JsonResponse
     {
         try {
-            $product = $this->productRepository->find($id);
+            $product = $this->productRepository->with("categories")->find($id);
         }catch(\Exception $exception){
             return  response()->json([
-                "massage" => "Não foi encotrado nenhum produto."
+                "error" => "Não foi encotrado nenhum produto."
             ], 400);
         }
 

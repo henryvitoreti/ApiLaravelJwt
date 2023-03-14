@@ -16,6 +16,12 @@ class Product extends Model
         "price",
     ];
 
+    protected $hidden = [
+        "created_at",
+        "updated_at",
+        "deleted_at",
+    ];
+
     /**
      * @return BelongsToMany
      */
@@ -23,4 +29,12 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class, "categories_products", "product_id", "category_id");
     }
+
+    const RULES = [
+        "categories" => "required",
+        "categories.*" => "required",
+        "categories.*.id" => "required",
+        "name" => "required|max:254",
+        "price" => "required|integer|max:9999999999",
+    ];
 }

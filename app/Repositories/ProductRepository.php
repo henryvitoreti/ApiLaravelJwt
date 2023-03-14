@@ -18,7 +18,7 @@ class ProductRepository extends  BaseRepository
 
     public function search($attributes)
     {
-        $query = $this->model->newQuery();
+        $query = $this->model->with("categories");
 
         if(isset($attributes['search'])){
             $query->where(function($q) use($attributes){
@@ -29,9 +29,9 @@ class ProductRepository extends  BaseRepository
             });
         }
 
-        if(isset($attributes['limit'], $attributes['offset'])) {
-            $query->skip($attributes['limit'] * $attributes['offset'])
-                ->limit($attributes['limit']);
+        if(isset($attributes['per_page'], $attributes['offset'])) {
+            $query->skip($attributes['per_page'] * $attributes['offset'])
+                ->limit($attributes['per_page']);
         }
 
         return $query->get();

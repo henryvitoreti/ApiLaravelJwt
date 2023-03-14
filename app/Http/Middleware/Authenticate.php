@@ -10,7 +10,7 @@ class Authenticate extends Middleware
     public function handle($request, Closure $next, ...$guards)
     {
         if ($request->header('Accept') !== 'application/json') {
-            return response()->json(['error' => 'Invalid Accept'], 400);
+            return response()->json(['error' => 'Header Accept invalido, é preciso setar como application/json.'], 406);
         }
 
         $this->authenticate($request, $guards);
