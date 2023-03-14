@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('auth/login', [\App\Http\Controllers\AuthController::class, 'login']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(["middleware" => "auth:api", "prefix" => "products/"], function(){
+   Route::get("", [\App\Http\Controllers\ProductController::class, 'filter']);
+   Route::get("{id}", [\App\Http\Controllers\ProductController::class, 'find']);
 });

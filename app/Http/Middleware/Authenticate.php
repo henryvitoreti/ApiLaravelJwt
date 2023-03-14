@@ -2,10 +2,22 @@
 
 namespace App\Http\Middleware;
 
+use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
 {
+    public function handle($request, Closure $next, ...$guards)
+    {
+        if ($request->header('Accept') !== 'application/json') {
+            return response()->json(['error' => 'Invalid Accept'], 400);
+        }
+
+        $this->authenticate($request, $guards);
+
+        return $next($request);
+    }
+
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *
